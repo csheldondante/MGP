@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public static class CollectionUtils
 {
@@ -11,6 +12,13 @@ public static class CollectionUtils
 		if (array.Length != 1)
 			return default(T);
 		return array [0];
+	}
+
+	public static List<T> SingleElementList<T>(T element){
+		List<T> list = new List<T> (1);
+		list.Add (element);
+		return list;
+
 	}
 }
 
