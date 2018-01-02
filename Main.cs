@@ -8,12 +8,15 @@ using UnityEngine;
 public class Main : MonoBehaviour {
 	public GameObject _splashScreen;
 	public LoadingBar _loadingBar;
+	public WorldRenderer2D _renderer;
 
 	// Use this for initialization
 	void Start () {
 		InitializeComponents ();
 		InitializeStartupPrefs ();
 		InitializeUserPrefs ();
+		MultiLevelVoxelMap2D map = VoxelMapGenerator.GenerateMap(56, 56, 1, UnityEngine.Random.Range(int.MinValue, int.MaxValue));
+		_renderer.InstantiateMap (map);
 
 
 

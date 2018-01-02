@@ -2,22 +2,33 @@
 
 public class Position
 {
+	public enum PositionType{POS2D, POS3D, UNKNOWN};
+
 	public Position2D AsPosition2D(){
-		if(GetType()!=typeof(Position2D))
-			return null;
-		return (Position2D) this;
+		if(this is Position2D)
+			return (Position2D) this;
+		return null;
+		
 	}
 
 	public Position3D AsPosition3D(){
-		if(GetType()!=typeof(Position3D))
-			return null;
-		return (Position3D) this;
+		if(this is Position3D)
+			return (Position3D) this;
+		return null;
 	}
 
 	public ILayered AsILayered(){
 		if(GetType()!=typeof(ILayered))
 			return null;
 		return (ILayered) this;
+	}
+
+	public static PositionType GetPositionType(Position position){
+		if (position.GetType () == typeof(Position3D))
+			return PositionType.POS3D;
+		if (position.GetType () == typeof(Position2D))
+			return PositionType.POS2D;
+		return PositionType.UNKNOWN;
 	}
 }
 
@@ -31,8 +42,8 @@ public interface ILayered
 
 public class Position2D : Position
 {
-	private int _x;
-	private int _y;
+	protected int _x;
+	protected int _y;
 	public Position2D (int x, int y)
 	{
 		_x = x;
@@ -45,6 +56,10 @@ public class Position2D : Position
 
 	public int GetY(){
 		return _y;
+	}
+
+	public override string ToString(){
+		return "(" + _x + "," + _y + ")";
 	}
 }
 
@@ -59,35 +74,9 @@ public class Position3D : Position2D
 	public int GetZ(){
 		return _z;
 	}
-}
 
-public class LayeredPos2D : Position2D, ILayered{
-	protected LayerTag _tag;
-	public LayeredPos2D (int x, int y, LayerTag tag) : base(x, y){
-		SetLayer (tag);
-	}
-
-	public LayerTag GetLayer(){
-		return _tag;
-	}
-
-	public void SetLayer(LayerTag tag){
-		_tag = tag;
-	}
-}
-
-public class LayeredPos3D : Position3D, ILayered{
-	protected LayerTag _tag;
-	public LayeredPos3D (int x, int y, int z, LayerTag tag) : base(x, y , z){
-		SetLayer (tag);
-	}
-
-	public LayerTag GetLayer(){
-		return _tag;
-	}
-
-	public void SetLayer(LayerTag tag){
-		_tag = tag;
+	public override string ToString(){
+		return "(" + _x + "," + _y + "," + _z + ")";
 	}
 }
 
