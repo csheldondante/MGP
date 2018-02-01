@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class Position
 {
@@ -61,6 +62,10 @@ public class Position2D : Position
 	public override string ToString(){
 		return "(" + _x + "," + _y + ")";
 	}
+
+	public virtual Vector3 GetAsVector(){
+		return new Vector3 (_x, _y, 0);
+	}
 }
 
 public class Position3D : Position2D
@@ -77,6 +82,10 @@ public class Position3D : Position2D
 
 	public override string ToString(){
 		return "(" + _x + "," + _y + "," + _z + ")";
+	}
+
+	public override Vector3 GetAsVector(){
+		return new Vector3 (_x, _y, _z);
 	}
 }
 
