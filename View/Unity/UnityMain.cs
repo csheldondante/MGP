@@ -54,7 +54,10 @@ public class UnityMain : MonoBehaviour, IViewManager {
 	}
 
 	public void AddViewable(Viewable viewable){
-		//TODO implement
+		//TODO
+		//get the type of viewable
+		//get the corrisponding game object for this viewable
+		//set the data on the corresponding game objects view component
 	}
 
 }

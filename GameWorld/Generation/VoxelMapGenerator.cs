@@ -26,4 +26,18 @@ public static class VoxelMapGenerator{
 		return map;
 	}
 
+	public static void Generate2DTileMap<T>(T[,] emptyMap, T[] types){
+		for (int i = 0; i < emptyMap.GetLength (0); ++i) {
+			for (int j = 0; j < emptyMap.GetLength (1); ++j) {
+				if (i > 0 && UnityEngine.Random.value > .25) {
+					emptyMap[i,j] = emptyMap[i-1,j];
+				} else if (j > 0 && UnityEngine.Random.value > .25) {
+					emptyMap[i,j] = emptyMap[i,j-1];
+				} else {
+					emptyMap[i,j] = CollectionUtils.GetRandomElement (types);
+				}				
+			}
+		}
+	}
+
 }

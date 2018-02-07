@@ -7,12 +7,17 @@ public class Main{
 	public IViewManager _viewManager;
 	public AIManager _AIManager = new AIManager();
 	public List<DataEntity> _entities = new List<DataEntity>();
+	public List<Viewable> _viewables = new List<Viewable>();
 
 	public Main(IViewManager viewManager){
 		_viewManager = viewManager;
 	}
 
 	public void Start(){
+		DataEntity terrain = new DataEntity ();
+		Placeable placeable = new Placeable (terrain);
+		Tilemap2D terrainViewable = new Tilemap2D (terrain);
+		_viewManager.AddViewable (terrainViewable);
 		CreateEntities ();
 	}
 
