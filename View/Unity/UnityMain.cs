@@ -12,6 +12,11 @@ public class UnityMain : MonoBehaviour, IViewManager {
 	public LoadingBar _loadingBar;
 	public WorldRenderer2D _renderer;
 
+	public List<Transform> _tileTypes = new List<Transform>();
+	public Transform terrain2D;
+
+	private List<UnityViewComponent> _viewables = new List<UnityViewComponent> ();
+
 	// Use this for initialization
 	void Start () {
 		InitializeComponents ();
@@ -20,8 +25,8 @@ public class UnityMain : MonoBehaviour, IViewManager {
 		_gameLogicUpdater = new Main (this);
 		_gameLogicUpdater.Start ();
 
-		MultiLevelVoxelMap2D map = VoxelMapGenerator.GenerateMap(256, 256, 1, UnityEngine.Random.Range(int.MinValue, int.MaxValue));
-		_renderer.InstantiateMap (map);
+		//MultiLevelVoxelMap2D map = VoxelMapGenerator.GenerateMap(256, 256, 1, UnityEngine.Random.Range(int.MinValue, int.MaxValue));
+		//_renderer.InstantiateMap (map);
 
 
 
@@ -54,10 +59,27 @@ public class UnityMain : MonoBehaviour, IViewManager {
 	}
 
 	public void AddViewable(Viewable viewable){
+		if (viewable is Tilemap2D)
+			CreateRepresentation ((Tilemap2D) viewable);
 		//TODO
 		//get the type of viewable
 		//get the corrisponding game object for this viewable
 		//set the data on the corresponding game objects view component
 	}
 
+	public Transform CreateRepresentation(Tilemap2D map){
+		Transform terrain = GameObject.Instantiate (terrain2D);
+		int tileNum = 0;
+		foreach (Tilemap2D.TileType type in map.tiles) {
+			int x = tileNum / map.tiles.GetLength (0);
+			int y = tileNum % map.tiles.GetLength (0);
+			int tileIndex = (int)type;
+			Transform newTile = GameObject.Instantiate (_tileTypes [tileIndex], new Vector3(x-map.tiles.GetLength(0)/2, y-map.tiles.GetLength(1)/2,0), Quaternion.identity);
+			newTile.SetParent (terrain);
+			tileNum++;
+		}
+		_viewables.Add (terrain.GetComponent<UnityViewComponent> ());
+		return terrain;
+	
+	}
 }

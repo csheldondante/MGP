@@ -14,10 +14,7 @@ public class Main{
 	}
 
 	public void Start(){
-		DataEntity terrain = new DataEntity ();
-		Placeable placeable = new Placeable (terrain);
-		Tilemap2D terrainViewable = new Tilemap2D (terrain);
-		_viewManager.AddViewable (terrainViewable);
+		CreateTerrain ();
 		CreateEntities ();
 	}
 
@@ -37,6 +34,14 @@ public class Main{
 				viewables.Add (viewable);
 		}
 		return viewables;
+	}
+
+	private void CreateTerrain(){
+		DataEntity terrain = new DataEntity ();
+		_entities.Add (terrain);
+		Placeable placeable = new Placeable (terrain);
+		Tilemap2D terrainViewable = new Tilemap2D (terrain);
+		_viewManager.AddViewable (terrainViewable);
 	}
 
 	private void CreateEntities(){
